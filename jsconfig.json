@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
+    "jsx" : "react-jsx",
     "paths": {
       "@/*": ["./*"]
-    }
-  }
+    },
+    "allowJs": true
+  },
+  "include" : ["**/*.js","**/*.jsx"]
 }

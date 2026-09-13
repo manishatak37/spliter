@@ -13,4 +13,57 @@ export default defineSchema({
     .searchIndex("search_name", {searchField : "name"})
     .searchIndex("search_email", {searchField : "email"}),
 
+    expenses :defineTable({
+        description :v.string(),
+        amount : v.number(),
+        category :v.optional(v.string()),
+        date : v.number(), //timestamp
+        paidByUserId: v.id("users"),//References to users table
+        splitType : v.string(),//"equal","percentage" ,"exact"
+        splits : v.array(
+            v.object({
+                userId :v.id("users"),//References to users table
+                amount : v.number(),//amount owned by this user
+                paid:v.boolean(),
+
+            })
+        ),
+        groupId : v.optional(v.id("groups")), //undefined for one-on-one expenses
+        createdBy : v.id("users"), //References to users table
+    })
+    .index("by_group",["groupId"])
+    .index("by_user_and_group",["paidByUserId" , "groupId"])
+    .index("by_date",["date"]),
+
+
+    groups: defineTable({
+        name: v.string(),
+        description: v.optional(v.string()),
+        createdBy: v.id("users"), // Reference to users table
+        members: v.array(
+          v.object({
+            userId: v.id("users"), // Reference to users table
+            role: v.string(), // "admin" or "member"
+            joinedAt: v.number(),
+          })
+        ),
+      }),
+
+    settlements: defineTable({
+        amount : v.number(),
+        note: v.optional(v.string()),
+        date: v.number(), // timestamp
+        paidByUserId : v.id("users"), //References to users table
+        receivedByUserId : v.id("users"), //References to users table
+        groupId: v.optional(v.id("groups")), //null for one-on-one settlements
+        relatedExpenseIds: v.optional(v.array(v.id("expenses"))), //Which expense this settlement covers
+        createdBy: v.id("users"), //Refernce to users table
+    })
+    .index("by_group",["groupId"])
+    .index("by_user_and_group",["paidByUserId" , "groupId"])
+    .index("by_receiver_and_group",["receivedByUserId" , "groupId"])
+    .index("by_date",["date"]),
+
+
+
 });
