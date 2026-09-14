@@ -37,5 +37,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 =======
 # spliter
-This is a advance bill spliting website
+Splitter is a simple, smart way to split bills and shared expenses. Add an expense, split it between friends, roommates, or travel buddies, and instantly see who owes what — no more awkward math or chasing people for money.
 >>>>>>> cec2ee3a79221faffcfad2684777b3b7cb668812
